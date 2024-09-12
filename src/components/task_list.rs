@@ -16,16 +16,22 @@ pub fn task_list(
         tasks,
         on_delete_task,
         on_toggle_task,
-    }: &TaskListProps,
+    }: &TaskListProps
 ) -> Html {
     let tasks: Html = tasks
         .iter()
-        .map(|task| html!( <TaskItem task={task.clone()} on_delete_task={on_delete_task} on_toggle_task={on_toggle_task} />))
+        .map(|task| html! {
+            <TaskItem 
+                task={task.clone()} 
+                on_delete_task={on_delete_task} 
+                on_toggle_task={on_toggle_task} 
+            />
+        })
         .collect();
 
-    html!(
+    html! {
         <ul id="task-list">
             {tasks}
         </ul>
-    )
+    }
 }

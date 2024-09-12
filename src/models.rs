@@ -1,12 +1,25 @@
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
+use serde_json::Value;
 
-#[derive(Clone, PartialEq, Deserialize)]
-pub struct Task {
-    pub id: String,
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct Title {
+    #[serde(rename = "Strand")]
     pub title: String,
-    pub completed: bool,
-    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub struct CompletedStatus {
+    #[serde(rename = "Bool")]
+    pub status: bool,
+}
+
+#[derive(Clone, Deserialize, Debug, PartialEq)]
+pub struct Task {
+    pub id: Value,
+    pub title: Title,
+    pub completed: CompletedStatus,
+    pub created_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Deserialize)]

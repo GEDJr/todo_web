@@ -22,7 +22,7 @@ pub async fn create_task(title: &str) -> Result<Task, Error> {
 }
 
 pub async fn toggle_task(id: String) -> Result<AffectedRows, Error> {
-    Request::patch(&format!("{BASE_URL}/task/{id}"))
+    Request::patch(&format!("{BASE_URL}/task/tasks:{id}"))
         .send()
         .await
         .unwrap()
@@ -31,7 +31,7 @@ pub async fn toggle_task(id: String) -> Result<AffectedRows, Error> {
 }
 
 pub async fn delete_task(id: String) -> Result<AffectedRows, Error> {
-    Request::delete(&format!("{BASE_URL}/task/{id}"))
+    Request::delete(&format!("{BASE_URL}/task/tasks:{id}"))
         .send()
         .await
         .unwrap()

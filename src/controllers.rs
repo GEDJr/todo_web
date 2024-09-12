@@ -1,5 +1,6 @@
 use crate::{
     state::{TaskAction, TaskState},
+    models::Task,
     todo_api,
 };
 use yew::UseReducerHandle;
@@ -22,9 +23,9 @@ impl TaskController {
     }
 
     pub fn create_task(&self, title: String) {
-        let tasks = self.state.clone();
+        let tasks: UseReducerHandle<TaskState> = self.state.clone();
         wasm_bindgen_futures::spawn_local(async move {
-            let response = todo_api::create_task(&title).await.unwrap();
+            let response: Task = todo_api::create_task(&title).await.unwrap();
             tasks.dispatch(TaskAction::Add(response));
         });
     }
@@ -46,6 +47,7 @@ impl TaskController {
             if response.rows_affected == 1 {
                 tasks.dispatch(TaskAction::Delete(id.clone())); 
             }
+            // web_sys::console::log_1(&format!("Current tasks: {:#?}", tasks.tasks).into());
         });
     }
 }

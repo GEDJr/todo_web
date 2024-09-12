@@ -2,7 +2,10 @@ use std:: rc::Rc;
 
 use yew::Reducible;
 
-use crate::models::Task;
+use crate::{
+    models::Task, 
+    traits::JsonSearch
+};
 
 pub enum TaskAction {
     Set(Vec<Task>),
@@ -34,14 +37,14 @@ impl Reducible for TaskState {
             }
             TaskAction::Delete(id) => {
                 let mut tasks = self.tasks.clone();
-                tasks.retain(|task| task.id != id);
+                tasks.retain(|task| task.id.find_id().unwrap() != id);
                 tasks
             }
             TaskAction::Toggle(id) => {
                 let mut tasks = self.tasks.clone();
-                let task = tasks.iter_mut().find(|task| task.id == id);
+                let task: Option<&mut Task> = tasks.iter_mut().find(|task| task.id.find_id().unwrap() == id);
                 if let Some(task) = task {
-                task.completed = !task.completed;
+                    task.completed.status = !task.completed.status;
                 }
                 tasks
             }

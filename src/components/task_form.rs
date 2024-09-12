@@ -7,7 +7,11 @@ pub struct TaskFormProps {
 }
 
 #[function_component(TaskForm)]
-pub fn task_form(TaskFormProps { on_create_task }: &TaskFormProps) -> Html {
+pub fn task_form(
+    TaskFormProps { 
+        on_create_task 
+    }: &TaskFormProps
+) -> Html {
     let input_node_ref = use_node_ref();
 
     let on_click = {
@@ -24,15 +28,20 @@ pub fn task_form(TaskFormProps { on_create_task }: &TaskFormProps) -> Html {
         })
     };
 
-    html!(
+    html! {
         <div>
             <label for="new-task">
                 {"Add Item"}
             </label>
             <div class="center">
-                <input ref={input_node_ref} id="new-task" type="task" />
+                <input 
+                    placeholder="What do you want to do?"
+                    ref={input_node_ref} 
+                    id="new-task" 
+                    type="task" 
+                />
                 <button onclick={on_click}>{"Add"}</button>
             </div>
         </div>
-    )
+    }
 }
